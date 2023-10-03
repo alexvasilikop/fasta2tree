@@ -6,11 +6,14 @@ A simple computational workflow for inferring phylogenetic trees from a set of u
 
 ## Requirements
 - Nextflow
+
 Alignment trimming:
 - trimal
+
 Phylogenetic reconstruction software:
 - IQ-TREE
 - FASTTREE
+
 Multiple sequence alignment
 - MAFFT
 - MUSCLE
