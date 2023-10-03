@@ -5,7 +5,13 @@ A simple computational workflow for inferring phylogenetic trees from a set of u
 ``` nextflow run fasta2tree.nf -params-file params.json```
 
 ## Requirements
+The following should be on path:
 - Nextflow
+
+Multiple sequence alignment
+- MAFFT
+- MUSCLE
+- FSA
 
 Alignment trimming:
 - trimal
@@ -13,8 +19,3 @@ Alignment trimming:
 Phylogenetic reconstruction software:
 - IQ-TREE
 - FASTTREE
-
-Multiple sequence alignment
-- MAFFT
-- MUSCLE
-- FSA
