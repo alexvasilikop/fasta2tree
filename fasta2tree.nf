@@ -58,7 +58,7 @@ process ALIGNMENT {
 
 process TRIM_ALIGNMENTS {
 
-    publishDir params.alignments_outdir, mode: 'copy'
+    publishDir params.alignments_outdir, mode: 'copy', pattern: "*aln.trimmed.fa"
     debug true
 
     input:
