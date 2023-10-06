@@ -14,7 +14,7 @@ Multiple sequence alignment
 - FSA
 
 Alignment trimming:
-- trimal
+- trimAl
 
 Phylogenetic reconstruction software:
 - IQ-TREE
