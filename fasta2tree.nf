@@ -6,6 +6,7 @@ nextflow.enable.dsl=2
 // 1) multiple sequence alignments (options: mafft, muscle, fsa)
 // 2) trimming of individual alignment files (trimal)
 // 3) phylogenetic reconstruction (options: iqtree, fasttree)
+// 4) tree midpoint rerooting, visualization and export in .svg format using ETE3 (Huerta-Cepas et al. 2016, MBE)
 
 process ALIGNMENT {
 
@@ -53,23 +54,22 @@ process ALIGNMENT {
         ${params.al_software} -h
         """
     }
-
 }
 
 process TRIM_ALIGNMENTS {
 
-    publishDir params.alignments_outdir, mode: 'copy', pattern: "*aln.trimmed.fa"
+    publishDir params.alignments_outdir, mode: 'copy', pattern: "*.trimmed.fa"
     debug true
 
     input:
     path alignment
 
     output:
-    path "${alignment.baseName}.aln.trimmed.fa"
+    path "${alignment.baseName}.trimmed.fa"
 
     script:
     """
-    trimal -in ${alignment} -out "${alignment.baseName}.aln.trimmed.fa" -gappyout -fasta
+    trimal -in ${alignment} -out "${alignment.baseName}.trimmed.fa" -gappyout -fasta
     """
 }
 
@@ -84,12 +84,12 @@ process PHYLOGENY {
 
     output:
     path "${aligned_fasta.baseName}.treefile", emit: tree
-    path "${aligned_fasta.baseName}*.log", emit: log
+    path "${aligned_fasta.baseName}.log", emit: log
 
     script:
     if (params.tree_software=="fasttree") {
         """
-        fasttree -log "${aligned_fasta.baseName}.fasttree.log" ${aligned_fasta} > "${aligned_fasta.baseName}.treefile"
+        fasttree -lg -log "${aligned_fasta.baseName}.log" ${aligned_fasta} > "${aligned_fasta.baseName}.treefile"
         """
     }
 
@@ -107,6 +107,33 @@ process PHYLOGENY {
     }
 }
 
+process TREE_REROOTING_VISUALIZATION {
+
+    publishDir params.tree_figs_outdir, mode: 'copy', pattern: "*rerooted.svg"
+    debug true
+    
+    input:
+    path treefiles
+
+    output:
+    path "${treefiles.baseName}.rerooted.svg", emit: svg
+
+    script:
+    """
+    #!/usr/bin/env python3
+    from ete3 import Tree, TreeStyle
+
+    t=Tree("${treefiles}", format=0)
+
+    midpoint_ancestor=t.get_midpoint_outgroup()
+    t.set_outgroup(midpoint_ancestor)
+
+    ts = TreeStyle()
+    ts.show_branch_support = True
+    t.render("${treefiles.baseName}.rerooted.svg", tree_style=ts)
+    """
+}
+
 workflow {
     fasta_ch = Channel.fromPath(params.fasta, checkIfExists: true)
 
@@ -118,4 +145,8 @@ workflow {
     PHYLOGENY(TRIM_ALIGNMENTS.out)
     PHYLOGENY.out.log.view()
     PHYLOGENY.out.tree.view()
+
+    //visualize the trees
+    TREE_REROOTING_VISUALIZATION(PHYLOGENY.out.tree)
+    TREE_REROOTING_VISUALIZATION.out.svg.view()
 }
