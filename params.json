@@ -4,6 +4,8 @@
     "tree_log_outdir": "/home/alex/Desktop/tree_logs",
     "tree_outdir": "/home/alex/Desktop/treefiles",
     "alignments_outdir": "/home/alex/Desktop/alignments",
-    "al_software": "fsa",
+    "tree_figs_outdir": "/home/alex/Desktop/tree_figures",
+    "al_software": "muscle",
     "tree_software": "iqtree"
 }
+
