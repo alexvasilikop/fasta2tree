@@ -2,7 +2,7 @@
 A simple computational workflow written in nextflow for inferring phylogenetic trees from a set of unaligned fasta files of protein sequences and visualizing these trees after rooting at midpoint. Input directory and options should be provided in the params.json file. The tool performs the following tasks given a directory of unaligned fasta files:
 1. Multiple sequence alignment (MUSCLE, MAFFT or FSA)
 2. Alignment trimming (trimAl)
-3. Phylogenetic reconstruction (IQ-TREE v. 1.6.X or fasttree v. 2.1.X). If IQ-TREE is selected model selection is performed too. If fasttree is selected LG model is used (Le-Gascuel 2008 model).
+3. Phylogenetic reconstruction (IQ-TREE v. 1.6.X or fasttree v. 2.1.X). If IQ-TREE is chosen then model selection is performed too automatically. If fasttree is selected LG model is used (Le-Gascuel 2008 model).
    In IQ-TREE mode branch support is based on 2000 SH-aLRT replicates
 5. Tree rerooting at midpoint and extracting rooted tree figures in .svg format using ETE3
 
