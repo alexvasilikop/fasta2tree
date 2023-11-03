@@ -1,6 +1,5 @@
 # fasta2tree
-A simple computational workflow written in nextflow for inferring phylogenetic trees from a set of unaligned fasta files of protein sequences (input directory is provided in the params.json file) and 
-visualizing these trees after rooting at midpoint. The tool performs the following tasks given a directory of unaligned fasta files:
+A simple computational workflow written in nextflow for inferring phylogenetic trees from a set of unaligned fasta files of protein sequences and visualizing these trees after rooting at midpoint. Input directory and options should be provided in the params.json file. The tool performs the following tasks given a directory of unaligned fasta files:
 1. Multiple sequence alignment (MUSCLE, MAFFT or FSA)
 2. Alignment trimming (trimAl)
 3. Phylogenetic reconstruction (IQ-TREE v. 1.6.X or fasttree v. 2.1.X). If IQ-TREE is selected model selection is performed too. If fasttree is selected LG model is used (Le-Gascuel 2008 model).
