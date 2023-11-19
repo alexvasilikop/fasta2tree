@@ -65,7 +65,7 @@ process TRIM_ALIGNMENTS {
     path alignment
 
     output:
-    path "${alignment.baseName}.trimmed.fa"
+    path "${alignment.baseName}.trimmed.fa", emit: fasta
 
     script:
     """
@@ -142,7 +142,7 @@ workflow {
     //Trim alignments
     TRIM_ALIGNMENTS(ALIGNMENT.out.fasta)
     //Phylogenetic tree reconstruction
-    PHYLOGENY(TRIM_ALIGNMENTS.out)
+    PHYLOGENY(TRIM_ALIGNMENTS.fasta.out)
     PHYLOGENY.out.log.view()
     PHYLOGENY.out.tree.view()
 
