@@ -142,7 +142,7 @@ workflow {
     //Trim alignments
     TRIM_ALIGNMENTS(ALIGNMENT.out.fasta)
     //Phylogenetic tree reconstruction
-    PHYLOGENY(TRIM_ALIGNMENTS.fasta.out)
+    PHYLOGENY(TRIM_ALIGNMENTS.out.fasta)
     PHYLOGENY.out.log.view()
     PHYLOGENY.out.tree.view()
 
